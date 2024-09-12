@@ -99,7 +99,7 @@ vim.g.have_nerd_font = true
 --  For more options, you can see `:help option-list`
 
 -- force en_US language
-vim.cmd 'language en_US'
+vim.cmd 'language en_US.UTF-8'
 
 -- Make line numbers default
 vim.opt.number = true
@@ -440,6 +440,8 @@ require('lazy').setup({
     end,
   },
 
+  { 'b0o/SchemaStore.nvim' },
+
   -- LSP Plugins
   {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
@@ -610,7 +612,20 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        pyright = {},
+        jsonls = {
+          settings = {
+            json = {
+              schemas = require('schemastore').json.schemas(),
+            },
+          },
+        },
+        basedpyright = {
+          settings = {
+            basedpyright = {
+              typeCheckingMode = 'standard',
+            },
+          },
+        },
         rust_analyzer = {
           settings = {
             ['rust-analyzer'] = {
